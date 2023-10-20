@@ -1,0 +1,47 @@
+#header {
+  text-align: center;
+  margin-top: 40px;
+}
+.top-quote {
+  text-align: center;
+}
+.select-section {
+  display: flex;
+  justify-content: space-around;
+}
+.select-family select {
+  padding: 15px 100px;
+}
+.select-characters select {
+  padding: 15px 100px;
+}
+.quote-buttons-container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 60px;
+}
+
+.guote-btn {
+  padding: 13px 50px;
+}
+
+.quote-text-container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 60px;
+}
+.story-btn {
+  text-align: center;
+}
+.story-btn button {
+  padding: 13px 50px;
+  margin-top: 60px;
+}
+.story-box {
+  border: 1px solid black;
+  width: 60%;
+  margin: auto;
+  margin-top: 60px;
+  padding: 20px 30px;
+  border-radius: 5px;
+}
