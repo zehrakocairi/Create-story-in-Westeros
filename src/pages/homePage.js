@@ -8,11 +8,17 @@ const selectListFamilyLeft = document.querySelector(
 const selectListFamilyRight = document.querySelector(
   ".select-family-right select"
 );
-const selectListCharacterLeftBtn = document.querySelector(
+const selectListCharacterLeft = document.querySelector(
   ".select-characters-left"
 );
-const selectListCharacterRightBtn = document.querySelector(
+const selectListCharacterRight = document.querySelector(
   ".select-characters-right"
+);
+const quoteBtnLeft = document.querySelector(
+  ".quote-buttons-container button:nth-of-type(1)"
+);
+const quoteBtnRight = document.querySelector(
+  ".quote-buttons-container button:nth-of-type(2)"
 );
 
 async function getRandomQuotes() {
@@ -52,18 +58,19 @@ function fillDropDown(dropDown, families) {
     dropDown.appendChild(option);
   });
 }
-selectListFamilyLeft.addEventListener("change", getOptionfromLeft);
-selectListFamilyRight.addEventListener("change", getOptionfromRight);
+selectListFamilyLeft.addEventListener("change", getFAmilyfromLeft);
+selectListFamilyRight.addEventListener("change", getFamilyfromRight);
 
-function getOptionfromLeft() {
+function getFAmilyfromLeft() {
   const selectedFamilyLeft =
     selectListFamilyLeft.options[selectListFamilyLeft.selectedIndex].value;
-  getCharacters(selectedFamilyLeft, selectListCharacterLeftBtn);
+  getCharacters(selectedFamilyLeft, selectListCharacterLeft);
 }
-function getOptionfromRight() {
+
+function getFamilyfromRight() {
   const selectedFamilyRight =
     selectListFamilyRight.options[selectListFamilyRight.selectedIndex].value;
-  getCharacters(selectedFamilyRight, selectListCharacterRightBtn);
+  getCharacters(selectedFamilyRight, selectListCharacterRight);
 }
 
 async function getCharacters(selectedFamily, selectListBtn) {
@@ -76,10 +83,9 @@ async function getCharacters(selectedFamily, selectListBtn) {
 
 function showCharacters(characters, selectListBtn) {
   const selectCharacterBtn = document.createElement("select");
-
   characters[0].members.map((member) => {
     const option = document.createElement("option");
-    option.value = member.name;
+    option.value = member.slug;
     option.text = member.name;
     selectCharacterBtn.appendChild(option);
   });
@@ -88,4 +94,33 @@ function showCharacters(characters, selectListBtn) {
     selectListBtn.innerHTML = "";
   }
   selectListBtn.appendChild(selectCharacterBtn);
+
+  selectCharacterBtn.addEventListener("click", () => {
+    detectSelectedCharacter(selectCharacterBtn);
+  });
+}
+
+function detectSelectedCharacter(selectCharacterBtn) {
+  const selectedCharacter =
+    selectCharacterBtn.options[selectCharacterBtn.selectedIndex].value;
+
+  getQuote(selectedCharacter);
+}
+
+async function getQuote(selectedCharacter) {
+  const res = await fetch(
+    `https://api.gameofthronesquotes.xyz/v1/author/${selectedCharacter}/1`
+  );
+
+  let quote = await res.json();
+
+  quoteBtnLeft.addEventListener("click", () => {
+    showQuote(quote.sentence);
+  });
+  quoteBtnRight.addEventListener("click", () => {
+    showQuote(quote.sentence);
+  });
+}
+function showQuote(quote) {
+  alert(quote);
 }
