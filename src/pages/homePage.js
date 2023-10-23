@@ -92,12 +92,12 @@ function showCharacters(familyData, charSelectContainer) {
 
   quoteBtnLeft.addEventListener("click", async () => {
     const selectedCharacterLeft = leftContainer.querySelector(".select-characters select");
-    var { sentence } = await getQuote(selectedCharacterLeft);
+    const { sentence } = await getQuote(selectedCharacterLeft);
     leftContainer.querySelector(".quote-text-container .quote-text").innerHTML = sentence;
   });
   quoteBtnRight.addEventListener("click", async () => {
     const selectedCharacterRight = rightContainer.querySelector(".select-characters select");
-    var { sentence } = await getQuote(selectedCharacterRight);
+    const { sentence } = await getQuote(selectedCharacterRight);
     rightContainer.querySelector(".quote-text-container .quote-text").innerHTML = sentence;
   });
 }
@@ -110,17 +110,17 @@ async function getQuote(characterSelect) {
   return quote;
 }
 async function createStory() {
-  var leftChar =
+  const leftChar =
     leftContainer.querySelector(".select-characters select").options[leftContainer.querySelector(".select-characters select").selectedIndex].innerText;
-  var rightChar =
+  const rightChar =
     rightContainer.querySelector(".select-characters select").options[rightContainer.querySelector(".select-characters select").selectedIndex].innerText;
-  var leftQuote = leftContainer.querySelector(".quote-text-container .quote-text").innerHTML;
-  var rightQuote = rightContainer.querySelector(".quote-text-container .quote-text").innerHTML;
-  var message = {
+  const leftQuote = leftContainer.querySelector(".quote-text-container .quote-text").innerHTML;
+  const rightQuote = rightContainer.querySelector(".quote-text-container .quote-text").innerHTML;
+  const message = {
     [leftChar]: leftQuote,
     [rightChar]: rightQuote,
   };
-  var story = await GetStory(message);
+  const story = await GetStory(message);
   document.querySelector(".story-box .story-text").innerHTML = story;
 }
 
@@ -128,7 +128,7 @@ async function GetStory(message) {
   const apiKey = "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";
   const apiUrl = "https://api.openai.com/v1/chat/completions";
 
-  var requestBody = {
+  const requestBody = {
     model: "gpt-3.5-turbo",
     messages: [
       {
@@ -166,8 +166,8 @@ async function GetStory(message) {
   };
 
   try {
-    var response = await fetch(apiUrl, requestOptions);
-    var data = await response.json();
+    const response = await fetch(apiUrl, requestOptions);
+    const data = await response.json();
     return data.choices[0].message.content;
   } catch (err) {
     alert("Error happened while fetching story. " + err);
