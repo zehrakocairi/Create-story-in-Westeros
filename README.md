@@ -1,9 +1,9 @@
-# Create-story-in-Westeros
-HYF-API project
+# Create a Story in Westeros
+a HYF-API project!!!
 
 # Game of Thrones Story
 
-## Description of the Project
+## Description
 In this project, I will utilize data from two main APIs: Game of Thrones Quotes API and OpenAI API to enhance the existing Game of Thrones narrative and generate captivating stories through the use of ChatGPT.
 
 ## Features
@@ -21,4 +21,4 @@ The project includes the following key features:
 - **Additional Story Buttons**: Implementation of diverse story options such as "story with a bad ending," "funny story," or "interesting story."
 - **Enhanced Styling**: The page will be styled to enhance user experience and aesthetic appeal.
 - **Character Images**: Integration of character images related to the selected characters.
-- **GOT Music**: Incorporation of Game of Thrones music to create an immersive user experience.
+- **GoT Music**: Incorporation of Game of Thrones music to create an immersive user experience.
