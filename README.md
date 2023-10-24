@@ -1,5 +1,5 @@
 # Create a Story in Westeros
-A HYF-API project!!!
+A HYF project!!!
 
 # Game of Thrones Story
 
