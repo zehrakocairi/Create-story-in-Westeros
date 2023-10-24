@@ -149,11 +149,11 @@ async function GetStory(message) {
   const apiUrl = "https://api.openai.com/v1/chat/completions";
 
   const requestBody = {
-    model: "gpt-3.5-turbo",
+    model: "gpt-4",
     messages: [
       {
         role: "system",
-        content: `I want to extend the Game Of Thrones story. I'll provide two characters with a sentence belonging to each. You should create a story of 400 words in length and tell me the story in a tag of '<p>'. Make sure to incorporate the exact sentences provided. English level should be B1.
+        content: `I want to extend the Game Of Thrones story. I'll provide two characters with a sentence belonging to each. You should create a story of 150 words in length and tell me the story in a tag of '<p>'. Make sure to incorporate the exact sentences provided. English level should be B1.
           For example:
           I'll provide:
           {
@@ -169,8 +169,8 @@ async function GetStory(message) {
         content: JSON.stringify(message),
       },
     ],
-    temperature: 1.8,
-    max_tokens: 1000,
+    temperature: 1,
+    max_tokens: 4181,
     top_p: 1,
     frequency_penalty: 0,
     presence_penalty: 0,
