@@ -2,6 +2,11 @@ export const initHomePage = () => {
   getRandomQuotes();
   getListOfFamily();
 };
+// I couldn't make it run
+
+// require('dotenv').config();
+// const apiKey = process.env.API_KEY;
+const apiKey = "secret secret secret";
 
 const gotApiURL = "https://api.gameofthronesquotes.xyz/v1";
 
@@ -141,7 +146,6 @@ async function createStory() {
 }
 
 async function GetStory(message) {
-  const apiKey = "secretsecretsecret";
   const apiUrl = "https://api.openai.com/v1/chat/completions";
 
   const requestBody = {
@@ -149,7 +153,7 @@ async function GetStory(message) {
     messages: [
       {
         role: "system",
-        content: `I want to extend the Game Of Thrones story. I'll provide two characters with a sentence belonging to each. You should create a story of 30 words in length and tell me the story in a tag of '<p>'. Make sure to incorporate the exact sentences provided. English level should be B1.
+        content: `I want to extend the Game Of Thrones story. I'll provide two characters with a sentence belonging to each. You should create a story of 400 words in length and tell me the story in a tag of '<p>'. Make sure to incorporate the exact sentences provided. English level should be B1.
           For example:
           I'll provide:
           {
@@ -166,7 +170,7 @@ async function GetStory(message) {
       },
     ],
     temperature: 1.8,
-    max_tokens: 180,
+    max_tokens: 1000,
     top_p: 1,
     frequency_penalty: 0,
     presence_penalty: 0,
