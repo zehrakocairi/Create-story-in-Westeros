@@ -46,11 +46,11 @@ async function getListOfFamily() {
   showFamilyList(familyList);
 }
 
-async function showFamilyList(families) {
-  // Adding placehoder option
-  families.unshift({ name: "Select Your Family", disabled: true });
+function showFamilyList(families) {
+  // Adding placeholder option to family list
+  families.unshift({ name: "Select Your Family" });
 
-  // fill with familes
+  // fill with families
   fillFamilies(familySelectLeft, families);
   fillFamilies(familySelectRight, families);
 }
@@ -60,7 +60,6 @@ function fillFamilies(familySelect, families) {
     const option = document.createElement("option");
     option.value = family.slug;
     option.text = family.name;
-    option.disabled = family.disabled;
     familySelect.appendChild(option);
   });
 }
@@ -89,43 +88,60 @@ function showCharacters(familyData, charSelectContainer) {
   });
 
   charSelectContainer.appendChild(select);
-
-  quoteBtnLeft.addEventListener("click", async () => {
-    const selectedCharacterLeft = leftContainer.querySelector(".select-characters select");
-    const { sentence } = await getQuote(selectedCharacterLeft);
-    leftContainer.querySelector(".quote-text-container .quote-text").innerHTML = sentence;
-  });
-  quoteBtnRight.addEventListener("click", async () => {
-    const selectedCharacterRight = rightContainer.querySelector(".select-characters select");
-    const { sentence } = await getQuote(selectedCharacterRight);
-    rightContainer.querySelector(".quote-text-container .quote-text").innerHTML = sentence;
-  });
 }
+
+quoteBtnLeft.addEventListener("click", async () => {
+  const selectedCharacterLeft = leftContainer.querySelector(".select-characters select");
+  const { sentence } = (await getQuote(selectedCharacterLeft)) ?? {}; // I did it cool here :)))
+  leftContainer.querySelector(".quote-text-container .quote-text").innerHTML = sentence ?? "";
+});
+quoteBtnRight.addEventListener("click", async () => {
+  const selectedCharacterRight = rightContainer.querySelector(".select-characters select");
+
+  const { sentence } = (await getQuote(selectedCharacterRight)) ?? {}; // same here :)))
+  rightContainer.querySelector(".quote-text-container .quote-text").innerHTML = sentence ?? ""; // I'm learning :);
+});
 
 async function getQuote(characterSelect) {
-  const selectedCharacter = characterSelect.value;
-  const res = await fetch(`${gotApiURL}/author/${selectedCharacter}/1`);
-
-  const quote = await res.json();
-  return quote;
+  if (characterSelect !== null) {
+    const selectedCharacter = characterSelect.value;
+    const res = await fetch(`${gotApiURL}/author/${selectedCharacter}/1`);
+    const quote = await res.json();
+    return quote;
+  } else {
+    alert("Please select a family first!");
+  }
 }
+
 async function createStory() {
-  const leftChar =
-    leftContainer.querySelector(".select-characters select").options[leftContainer.querySelector(".select-characters select").selectedIndex].innerText;
-  const rightChar =
-    rightContainer.querySelector(".select-characters select").options[rightContainer.querySelector(".select-characters select").selectedIndex].innerText;
+  const selectCharLeft = leftContainer.querySelector(".select-characters select");
+  const selectCharRight = rightContainer.querySelector(".select-characters select");
+
+  if (selectCharLeft === null && selectCharRight === null) {
+    alert("Please fill in the blanks!");
+    return;
+  }
+  const leftChar = selectCharLeft.options[leftContainer.querySelector(".select-characters select").selectedIndex].innerText;
+  const rightChar = selectCharRight.options[rightContainer.querySelector(".select-characters select").selectedIndex].innerText;
   const leftQuote = leftContainer.querySelector(".quote-text-container .quote-text").innerHTML;
   const rightQuote = rightContainer.querySelector(".quote-text-container .quote-text").innerHTML;
+
   const message = {
     [leftChar]: leftQuote,
     [rightChar]: rightQuote,
   };
-  const story = await GetStory(message);
-  document.querySelector(".story-box .story-text").innerHTML = story;
+
+  if (message[leftChar] && message[leftChar].trim() !== "" && message[rightChar] && message[rightChar].trim() !== "") {
+    if (leftChar === rightChar) {
+      alert(`${leftChar}: You chose same characters.So, I'm the only hero of this story!`);
+    }
+    const story = await GetStory(message);
+    document.querySelector(".story-box .story-text").innerHTML = story;
+  } else alert("Please get quote!");
 }
 
 async function GetStory(message) {
-  const apiKey = "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";
+  const apiKey = "secretsecretsecret";
   const apiUrl = "https://api.openai.com/v1/chat/completions";
 
   const requestBody = {
@@ -170,6 +186,6 @@ async function GetStory(message) {
     const data = await response.json();
     return data.choices[0].message.content;
   } catch (err) {
-    alert("Error happened while fetching story. " + err);
+    alert(`Error happened while fetching story. ${err}`);
   }
 }
