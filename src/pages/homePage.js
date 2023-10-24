@@ -23,6 +23,9 @@ familySelectLeft.addEventListener("change", () => {
 familySelectRight.addEventListener("change", () => {
   getFamily(familySelectRight, characterSelectRightContainer);
 });
+document.querySelector(".story-btn button").addEventListener("click", async () => {
+  await createStory();
+});
 
 async function getRandomQuotes() {
   const responseQuote = await fetch(gotApiURL + "/random");
@@ -86,15 +89,15 @@ function showCharacters(familyData, charSelectContainer) {
   });
 
   charSelectContainer.appendChild(select);
-  const selectedCharacterLeft = leftContainer.querySelector(".select-characters select");
-  const selectedCharacterRight = rightContainer.querySelector(".select-characters select");
 
   quoteBtnLeft.addEventListener("click", async () => {
-    var { sentence } = await getQuote(selectedCharacterLeft);
+    const selectedCharacterLeft = leftContainer.querySelector(".select-characters select");
+    const { sentence } = await getQuote(selectedCharacterLeft);
     leftContainer.querySelector(".quote-text-container .quote-text").innerHTML = sentence;
   });
   quoteBtnRight.addEventListener("click", async () => {
-    var { sentence } = await getQuote(selectedCharacterRight);
+    const selectedCharacterRight = rightContainer.querySelector(".select-characters select");
+    const { sentence } = await getQuote(selectedCharacterRight);
     rightContainer.querySelector(".quote-text-container .quote-text").innerHTML = sentence;
   });
 }
@@ -105,4 +108,68 @@ async function getQuote(characterSelect) {
 
   const quote = await res.json();
   return quote;
+}
+async function createStory() {
+  const leftChar =
+    leftContainer.querySelector(".select-characters select").options[leftContainer.querySelector(".select-characters select").selectedIndex].innerText;
+  const rightChar =
+    rightContainer.querySelector(".select-characters select").options[rightContainer.querySelector(".select-characters select").selectedIndex].innerText;
+  const leftQuote = leftContainer.querySelector(".quote-text-container .quote-text").innerHTML;
+  const rightQuote = rightContainer.querySelector(".quote-text-container .quote-text").innerHTML;
+  const message = {
+    [leftChar]: leftQuote,
+    [rightChar]: rightQuote,
+  };
+  const story = await GetStory(message);
+  document.querySelector(".story-box .story-text").innerHTML = story;
+}
+
+async function GetStory(message) {
+  const apiKey = "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";
+  const apiUrl = "https://api.openai.com/v1/chat/completions";
+
+  const requestBody = {
+    model: "gpt-3.5-turbo",
+    messages: [
+      {
+        role: "system",
+        content: `I want to extend the Game Of Thrones story. I'll provide two characters with a sentence belonging to each. You should create a story of 30 words in length and tell me the story in a tag of '<p>'. Make sure to incorporate the exact sentences provided. English level should be B1.
+          For example:
+          I'll provide:
+          {
+          "daenerys":"I am the blood of the dragon.",
+          "tyrion":"That's what I do: I drink and I know things."
+          }
+          You would tell the story in the following format:
+          <p> Daenerys declared 'I am the blood of the dragon.' while Tyrion wittily quipped, 'That's what I do: I drink and I know things.'</p>
+      `,
+      },
+      {
+        role: "user",
+        content: JSON.stringify(message),
+      },
+    ],
+    temperature: 1.8,
+    max_tokens: 180,
+    top_p: 1,
+    frequency_penalty: 0,
+    presence_penalty: 0,
+  };
+
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${apiKey}`,
+    },
+    body: JSON.stringify(requestBody),
+  };
+
+  try {
+    const response = await fetch(apiUrl, requestOptions);
+    const data = await response.json();
+    return data.choices[0].message.content;
+  } catch (err) {
+    alert("Error happened while fetching story. " + err);
+  }
 }
