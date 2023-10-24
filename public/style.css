@@ -52,17 +52,24 @@ html {
 .top-quote p {
   color: #485c83;
 }
-div p:nth-of-type(2) {
+.top-quote p:nth-of-type(2) {
   text-align: right;
   color: #7f6060d1;
   font-weight: 300;
 }
 .select-section {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
+  margin-top: 40px;
+}
+.left {
+  width: 30%;
+}
+.right {
+  width: 30%;
 }
 .select-family select {
-  min-width: 450px;
+  width: 100%;
   border-radius: 5px;
   border: none;
   padding: 18px;
@@ -82,7 +89,7 @@ div p:nth-of-type(2) {
   margin-top: 20px;
 }
 .select-characters select {
-  min-width: 450px;
+  width: 100%;
   border-radius: 5px;
   border: none;
   padding: 18px;
@@ -111,16 +118,16 @@ div p:nth-of-type(2) {
 }
 
 .quote-text-container {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 60px;
+  margin-top: 40px;
 }
-
+.quote-text-container div {
+  display: flex;
+}
 .quote-text {
   color: #485c83;
   background-color: rgb(255 255 255 / 92%);
   padding: 20px 30px;
-  width: 380px;
+  width: 100%;
   font-size: 15px;
   overflow-y: auto;
   height: 50px;
@@ -143,11 +150,96 @@ div p:nth-of-type(2) {
 .story-box {
   width: 60%;
   margin: auto;
-  margin-top: 60px;
+  margin-top: 40px;
   padding: 20px 30px;
   border-left: 7px solid #5575afd1;
   border-radius: 10px 0px 0px 10px;
   background-color: rgb(255 255 255 / 92%);
   color: #485c83;
   font-size: 15px;
+}
+
+/* FOR TABLET */
+@media only screen and (max-width: 1000px) {
+  .img-container img {
+    width: 200px;
+  }
+  #header h1 {
+    font-size: 28px;
+  }
+  .top-quote {
+    width: 70%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+  .left {
+    width: 35%;
+  }
+  .right {
+    width: 35%;
+  }
+  .quote-btn {
+    padding: 16px 45px;
+  }
+  .story-btn button {
+    padding: 16px 45px;
+  }
+}
+
+/* FOR MOBILE */
+@media only screen and (max-width: 768px) {
+  .img-container img {
+    width: 160px;
+  }
+  #header h1 {
+    font-size: 22px;
+  }
+  .top-quote svg {
+    right: -16px;
+    top: -22px;
+    font-size: 40px;
+  }
+  .top-quote p {
+    font-size: 12px;
+  }
+  .top-quote p:nth-of-type(2) {
+    font-size: 12px;
+  }
+  .left {
+    width: 40%;
+  }
+  .right {
+    width: 40%;
+  }
+  .select-family select {
+    padding: 15px;
+  }
+  .select-characters select {
+    padding: 15px;
+  }
+  .select-family p {
+    padding: 10px;
+    font-size: 12px;
+  }
+  .quote-btn {
+    padding: 14px 32px;
+    font-size: 12px;
+  }
+  .quote-text-container {
+    margin-top: 30px;
+  }
+  .quote-text {
+    font-size: 12px;
+    padding: 12px;
+  }
+  .story-btn button {
+    padding: 14px 42px;
+    font-size: 12px;
+  }
+  .story-box {
+    margin-top: 30px;
+  }
+  .story-text {
+    font-size: 12px;
+  }
 }
