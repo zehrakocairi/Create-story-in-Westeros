@@ -4,7 +4,7 @@ A HYF-API project!!!
 # Game of Thrones Story
 
 ## Description
-In this project, I will utilize data from two main APIs: Game of Thrones Quotes API: https://gameofthronesquotes.xyz/ and OpenAI API: https://api.openai.com to enhance the existing Game of Thrones narrative and generate captivating stories through the use of ChatGPT.
+In this project, I will utilize data from two main APIs: Game of Thrones Quotes API: https://gameofthronesquotes.xyz/ and OpenAI API: https://api.openai.com/v1/chat/completions to enhance the existing Game of Thrones narrative and generate captivating stories through the use of ChatGPT.
 
 ## Features
 The project includes the following key features:
